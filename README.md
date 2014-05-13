@@ -65,4 +65,4 @@ Authors
 -----------------
 
 - [Felipe R. Rêgo](https://github.com/feliperrego "GitHub - Felipe R. Rêgo")
-- [Silvio Lucena Jr.](https://github.com/feliperrego "GitHub - Silvio Lucena")
+- [Silvio Lucena Junior](https://github.com/silviolucenajunior "GitHub - Silvio Lucena")
