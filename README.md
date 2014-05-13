@@ -7,7 +7,7 @@ Simple module to make easier crop images in Django admin.
 
 Installation
 -----------------------------------
-Install ``django-simplecrop`` (or `download from [PyPI](http://pypi.python.org/pypi/django-simplecrop/ "Download from PyPI")):
+Install ``django-simplecrop`` (or download from [PyPI](http://pypi.python.org/pypi/django-simplecrop/ "Download from PyPI")):
 
     pip install django-simplecrop
 

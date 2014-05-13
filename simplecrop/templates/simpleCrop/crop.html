@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="{{ STATIC_URL }}simplecrop/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="{{ STATIC_URL }}simplecrop/css/bootstrap-responsive.min.css"/>
+    <link rel="stylesheet" href="{{ STATIC_URL }}simplecrop/css/utils_upload.css"/>
+    <link rel="stylesheet" href="{{ STATIC_URL }}simplecrop/css/jquery.Jcrop.css" type="text/css" />
+
+    <script type="text/javascript" src="{{ STATIC_URL }}simplecrop/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}simplecrop/js/jquery-form.js"></script>
+    <script src="{{ STATIC_URL }}simplecrop/js/jquery.Jcrop.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+            $('.crop-dialog-area').width($(window).width());
+
+            if ($(window).height() < 655){
+                $('.crop-dialog-area').height(580);
+            } else {
+                $('.crop-dialog-area').height($(window).height()-80);
+            }
+
+            window.onresize = function(){
+                $('.crop-dialog-area').width($(window).width());
+
+                var cont = parseInt($("input[name=cont]").val());
+                $(".crop-container").css('left', (cont-1)*-$(window).width());
+
+                console.log($(".crop-container").css("left"));
+
+                if ($(window).height() < 655){
+                    $('.crop-dialog-area').height(580);
+                } else {
+                    $('.crop-dialog-area').height($(window).height()-80);
+                }
+            };
+
+            $(".crop-tab.active").bind("click", function(){
+                $(".block").fadeIn("slow");
+                setTimeout(function(){
+                    var cont = parseInt($("input[name=cont]").val());
+                    if (cont < {{ totalCrops }}){
+                        $(".crop-container").animate({'left': '-' + (cont*$(window).width()) + 'px'}, function(){
+                            $(".block").fadeOut("slow");
+                        });
+                        $("input[name=cont]").val(cont+1);
+                    }else{
+                        $(".active").removeClass("active");
+                        $("#form_crop").ajaxSubmit({
+                            dataType: "json",
+                            success: function(responseText, responseStatus){
+                                if(responseText.sucesso){
+                                    window.location = "{{ redirect }}";
+                                }
+                            }
+                        });
+                    }
+                }, 2000)
+            })
+
+
+            {% for imagem in imagens %}
+                {% for crop in imagem.getCrops %}
+
+                    var api;
+                    $('#crop-{{ imagem.name }}-{{ crop|first }}x{{ crop|last  }}').Jcrop({
+                        bgOpacity: 0.5,
+                        bgColor: 'white',
+                        addClass: 'jcrop-light',
+                        aspectRatio: {{ crop|first  }} / {{ crop|last  }},
+                        onChange:   showCoords{{ imagem.name }}_{{ crop|first }}_{{ crop|last  }},
+                        onSelect:   showCoords{{ imagem.name }}_{{ crop|first }}_{{ crop|last  }},
+{#                        onRelease:  clearCoords#}
+                    },function(){
+                        api = this;
+                        api.setSelect([0,0,200, 300]);
+                        api.setOptions({ bgFade: true });
+                        api.ui.selection.addClass('jcrop-selection');
+                    });
+
+                    function showCoords{{ imagem.name }}_{{ crop|first }}_{{ crop|last  }}(c){
+                        $('input#x1___{{ imagem.name }}___{{ crop|first }}___{{ crop|last  }}').val(c.x);
+                        $('input#y1___{{ imagem.name }}___{{ crop|first }}___{{ crop|last  }}').val(c.y);
+                        $('input#x2___{{ imagem.name }}___{{ crop|first }}___{{ crop|last  }}').val(c.x2);
+                        $('input#y2___{{ imagem.name }}___{{ crop|first }}___{{ crop|last  }}').val(c.y2);
+                        $('input#w___{{ imagem.name }}___{{ crop|first }}___{{ crop|last  }}').val($('#crop-area-{{ forloop.counter }} img').width());
+                        $('input#h___{{ imagem.name }}___{{ crop|first }}___{{ crop|last  }}').val($('#crop-area-{{ forloop.counter }} img').height());
+                    }
+
+                {% endfor %}
+            {% endfor %}
+
+
+        })
+    </script>
+</head>
+<body>
+
+    <div class="block"><img src="{{ STATIC_URL }}simplecrop/img/loader.gif"></div>
+
+        <input type="hidden" name="cont" value="1"/>
+
+        <div class="crop-container">
+        {% for imagem in imagens %}
+            {% for crop in imagem.getCrops %}
+            <div class="crop-dialog-area" >
+                <div class="pagination" style="position: relative; top: 255px !important; z-index: 999;">
+                    <ul style="display: block !important;">
+                        <li class="active" style="float: right;"><a>{{ forloop.counter }} / {{ imagem.getCrops|length }} de {{ imagem.name|capfirst }}</a></li>
+                        <li class="active" style="float: left;"><a>Tamanho: {{ crop|first }}x{{ crop|last  }}</a></li>
+                    </ul>
+                </div>
+                <div class="crop-area" id="crop-area-{{ forloop.counter }}">
+                    <img id="crop-{{ imagem.name }}-{{ crop|first }}x{{ crop|last  }}" src="{{ MEDIA_URL }}{{ imagem.path }}" alt=""/>
+                </div>
+            </div>
+            {% endfor %}
+        {% endfor %}
+        </div>
+
+    <div>
+        <div class="crop-tab active" title="">Cropar imagem</div>
+    </div>
+
+    <form id="form_crop" action="/simplecrop/crop/" method="post">
+        {% csrf_token %}
+
+        {% for imagem in imagens %}
+            {% for crop in imagem.getCrops %}
+                <input type="hidden" id="x1___{{ imagem.name }}___{{ crop|first }}___{{ crop|last  }}" name="x1_._._{{ imagem.path }}_._._{{ crop|first }}_._._{{ crop|last  }}" />
+                <input type="hidden" id="y1___{{ imagem.name }}___{{ crop|first }}___{{ crop|last  }}" name="y1_._._{{ imagem.path }}_._._{{ crop|first }}_._._{{ crop|last  }}" />
+                <input type="hidden" id="x2___{{ imagem.name }}___{{ crop|first }}___{{ crop|last  }}" name="x2_._._{{ imagem.path }}_._._{{ crop|first }}_._._{{ crop|last  }}" />
+                <input type="hidden" id="y2___{{ imagem.name }}___{{ crop|first }}___{{ crop|last  }}" name="y2_._._{{ imagem.path }}_._._{{ crop|first }}_._._{{ crop|last  }}" />
+                <input type="hidden" id="w___{{ imagem.name }}___{{ crop|first }}___{{ crop|last  }}" name="w_._._{{ imagem.path }}_._._{{ crop|first }}_._._{{ crop|last  }}" />
+                <input type="hidden" id="h___{{ imagem.name }}___{{ crop|first }}___{{ crop|last  }}" name="h_._._{{ imagem.path }}_._._{{ crop|first }}_._._{{ crop|last  }}" />
+            {% endfor %}
+        {% endfor %}
+    </form>
+
+</body>
+</html>
