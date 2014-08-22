@@ -54,11 +54,11 @@ Include the ``__crops__`` parameter in your model and specify the field and imag
 
 Testing
 -----------------
-Step 1 - Add an image to your model and click the save button:
-![Step 1](https://photos-5.dropbox.com/t/0/AAAbIUFlisdivxlOS9JDtjHu0oe_UcGpA2lWEEjWy9PZLg/12/35856195/png/2048x1536/3/1400014800/0/2/step1.png/msi85fl_eYtFqadIi39FbX_GdXJ6opfyYP3a1cYDgg0 "Step 1")
+Step 1 - Add image:
+![Step 1](http://feliperego.com/img/step1.png "Step 1")
 
 Step 2 - Crop images:
-![Step 2](https://photos-1.dropbox.com/t/0/AACww3yrcYeWZLtcHiRlGaHB4vWieIuwW5i0hJ6y_CJ_8Q/12/35856195/png/2048x1536/3/1400014800/0/2/step2.png/D0k4WZUl5QSkmTspbklNr9LGpTJyV1WgjoX7EPxBInA "Step 2")
+![Step 2](http://feliperego.com/img/step2.png "Step 2")
 
 
 Authors
