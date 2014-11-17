@@ -16,11 +16,11 @@ Add ``simplecrop`` to ``INSTALLED_APPS`` in ``settings.py``:
 
     INSTALLED_APPS = (
         ...
-        "simplecrop",
+        'simplecrop',
         ...
     )
     
-Inlclude ``simpleCropAutodiscover()`` after ``admin.autodiscover()``:
+Include ``simpleCropAutodiscover()`` after ``admin.autodiscover()``:
     
     ...
     from simplecrop.utils import simpleCropAutodiscover
@@ -28,7 +28,7 @@ Inlclude ``simpleCropAutodiscover()`` after ``admin.autodiscover()``:
     admin.autodiscover()
     simpleCropAutodiscover()
 
-Include ``simplecrop.urls`` in your ``urls.py``:
+Include ``simplecrop.urls`` in ``urls.py``:
     
     urlpatterns = patterns('',
         ...
