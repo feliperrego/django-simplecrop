@@ -1,31 +1,37 @@
 #-*- coding: utf-8 -*-
-from glob import glob
 from setuptools import setup, find_packages
-#from distutils.core import setup
+import simplecrop
+
+version = simplecrop.__version__
 
 setup(
     name='django-simplecrop',
-    version='beta',
-    packages=find_packages(),
-    url='https://github.com/feliperrego/django-simplecrop',
-    license='BSD',
-    author=u'Felipe R. Rêgo',
-    author_email='feliperrego@gmail.com',
+    version=version,
     description='A simple module to make easier crop images in Django admin.',
     long_description=open('README.md').read(),
-    include_package_data=True,
-    data_files = [('static', glob('./simplecrop/static/*'))],
-    classifiers=[
-        'Development Status :: 4 - Beta',
-        'Environment :: Web Environment',
-        'Framework :: Django',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3'
+    install_requires=[
+        "PIL",
     ],
+    classifiers=[
+        "Programming Language :: Python",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Framework :: Django",
+        "Environment :: Web Environment",
+    ],
+    keywords='crop,django',
+    author=u'Felipe R. Rêgo',
+    author_email='feliperrego@gmail.com',
+    url='https://github.com/feliperrego/django-simplecrop',
+    license='BSD',
+    packages=find_packages(),
+    package_data = {
+        'simplecrop': [
+            'templates/simpleCrop/*.html',
+            'static/simplecrop/css/*.css',
+            'static/simplecrop/img/*.gif',
+            'static/simplecrop/js/*.js'
+        ],
+    },
+    include_package_data=True,
     zip_safe = False,
 )
