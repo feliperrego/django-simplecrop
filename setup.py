@@ -10,7 +10,8 @@ setup(
     description='A simple module to make easier crop images in Django admin.',
     long_description=open('README.md').read(),
     install_requires=[
-        "PIL",
+        "django",
+        "PIL"
     ],
     classifiers=[
         "Programming Language :: Python",
