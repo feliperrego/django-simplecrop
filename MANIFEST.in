@@ -1,0 +1,4 @@
+include README.md
+include LICENSE.txt
+recursive-include simplecrop/templates/simpleCrop *.html
+recursive-include simplecrop/static/*/ *.js *.css *.gif
