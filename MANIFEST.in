@@ -1,4 +1,6 @@
 include README.md
 include LICENSE.txt
 recursive-include simplecrop/templates/simpleCrop *.html
-recursive-include simplecrop/static/*/ *.js *.css *.gif
+recursive-include simplecrop/static/simplecrop/css *.css
+recursive-include simplecrop/static/simplecrop/img *.gif *.jpg
+recursive-include simplecrop/static/simplecrop/js *.js
