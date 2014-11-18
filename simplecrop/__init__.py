@@ -1,5 +1,5 @@
 #-*-coding: utf-8 -*-
-__version__ = "1.0"
+__version__ = "1.0.1"
 
 try:
     from django.template import add_to_builtins
