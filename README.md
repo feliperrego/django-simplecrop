@@ -61,6 +61,16 @@ Step 2 - Crop images:
 ![Step 2](http://feliperego.com/img/step2.png "Step 2")
 
 
+Template tag
+-----------------
+Use the template tag `{% thumbnail %}` in your templates:
+
+How to use:
+
+    <img name="myimage" src="{% thumbnail ImageObj '100x100' %}" />
+
+\* *This template tag obtains the thumbnail image created when saving in admin. If it does not exist, a new thumbnail with the specified sizes will be created.*
+
 Authors
 -----------------
 
