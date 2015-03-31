@@ -2,7 +2,7 @@
 django-simplecrop
 ================
 
-Simple module to make easier crop images in Django admin.
+A simple module to crop images in an easy way in Django Administration.
 
 
 Installation
