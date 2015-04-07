@@ -3,11 +3,10 @@ import os
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.http import HttpResponse
-from django.utils import simplejson
 from django.views.decorators.csrf import csrf_exempt
 from PIL import ImageOps, Image
 from django.conf import settings
-
+import json
 
 def crop_view(request):
     lista = {}
@@ -50,7 +49,7 @@ def crop_view(request):
             imagem_crop.save("%s/%s/thumbs/%s_%s" % (settings.MEDIA_ROOT, os.path.dirname(imagem_path), crop, os.path.basename(imagem_path)), image.format, quality=100)
 
     if request.is_ajax():
-        return HttpResponse(simplejson.dumps({"sucesso": True}))
+        return HttpResponse(json.dumps({"sucesso": True}))
 
 
 @csrf_exempt
